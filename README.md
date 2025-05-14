@@ -76,7 +76,7 @@ This diagram illustrates a typical Databricks-based Lakehouse architecture using
 ![image](https://github.com/user-attachments/assets/a6a6928e-0438-4717-a6ec-d3abce05ea3a)
 ![image](https://github.com/user-attachments/assets/22e4afb5-f8c2-4aa5-a4be-30861355ef83)
 
-
+---
 
 ## 📘 Explanation
 
@@ -89,6 +89,8 @@ This layer represents all possible sources of data that feed into Databricks.
 - **ERP/CRM Systems**: Enterprise systems like SAP (ERP) or Salesforce (CRM).
 - **SaaS Platforms**: Cloud-based services such as Google Analytics, Salesforce, Workday.
 
+---
+
 ### 2. INGESTION LAYER
 This is where raw data enters Databricks from the external sources.
 - **Auto Loader**: A Databricks utility for ingesting data in batch or streaming mode automatically.
@@ -99,6 +101,8 @@ This is where raw data enters Databricks from the external sources.
   - **Kafka**: Distributed event streaming platform.
   - **Event Hubs**: Azure’s event ingestion service.
   - **Pub/Sub**: Google Cloud’s messaging system.
+
+---
 
 ### 3. STORAGE LAYER + MEDALLION ARCHITECTURE (Delta Lake)
 This is the structured data lake using Delta Lake and implements the Medallion Architecture.
@@ -112,6 +116,8 @@ This is the structured data lake using Delta Lake and implements the Medallion A
   - **ADLS** – Azure Data Lake Storage
   - **GCS** – Google Cloud Storage
 
+---
+
 ### 4. DATA PROCESSING & ENGINEERING LAYER
 This layer transforms, enriches, and prepares the data for analytics or ML.
 - **Apache Spark**: Distributed data processing engine (Databricks is built on this).
@@ -119,6 +125,8 @@ This layer transforms, enriches, and prepares the data for analytics or ML.
 - **Delta Live Tables (DLT)**: Declarative pipelines that automate ETL workflows.
 - **MLlib / XGBoost**: Built-in libraries for machine learning.
 - **Databricks Workflows**: Orchestrates jobs, schedules, and dependencies.
+
+---
 
 ### 5. COMPUTE / RUNTIME ENVIRONMENT
 Resources used to execute queries, notebooks, pipelines, and ML models.
@@ -128,6 +136,8 @@ Resources used to execute queries, notebooks, pipelines, and ML models.
 - **Photon Runtime**: Highly performant SQL engine built by Databricks.
 - **Serverless SQL Warehouses**: Auto-managed compute for SQL users.
 
+---
+
 ### 6. GOVERNANCE & CATALOG LAYER
 Handles access, security, metadata, and lineage.
 - **Unity Catalog**:
@@ -136,6 +146,8 @@ Handles access, security, metadata, and lineage.
   - **Tags** – Metadata labels
   - **Audits** – Logs for compliance and monitoring
 - **IAM (Identity and Access Management)**: Integrated with providers like Azure Active Directory for user identity and permission control.
+
+---
 
 ### 7. CONSUMPTION & INTERFACE LAYER
 Interfaces and tools used to consume and interact with the data.
@@ -149,6 +161,8 @@ Interfaces and tools used to consume and interact with the data.
   - **REST API** – Allows programmatic access.
   - **SDK** – Software Development Kit for integration.
   - **dbx CLI** – CLI tool to manage jobs, repos, deployments.
+
+---
 
 ### 8. CLOUD INFRASTRUCTURE PLATFORM
 Underlying cloud services where Databricks is deployed.
