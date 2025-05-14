@@ -68,6 +68,16 @@ Databricks is used to:
 
 ---
 # 🧱 Databricks Architecture Diagram
+
+This diagram illustrates a typical Databricks-based Lakehouse architecture using layers. Each block represents a functional component of the data pipeline.
+
+
+![image](https://github.com/user-attachments/assets/ce445aa4-e141-445c-901f-41b04b7a347e)
+![image](https://github.com/user-attachments/assets/a6a6928e-0438-4717-a6ec-d3abce05ea3a)
+![image](https://github.com/user-attachments/assets/22e4afb5-f8c2-4aa5-a4be-30861355ef83)
+
+
+
 ## 📘 Explanation
 
 ### 1. External Data Sources
