@@ -67,7 +67,7 @@ Databricks is used to:
 - Simplifying **AI/ML development** with tools like MLflow and AutoML.
 
 ---
-# 🧱 Databricks Architecture Diagram
+# 🧱 Databricks Architecture – Block Flow Diagram
 
 This diagram illustrates a typical Databricks-based Lakehouse architecture using layers. Each block represents a functional component of the data pipeline.
 
