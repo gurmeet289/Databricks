@@ -80,123 +80,91 @@ This diagram illustrates a typical Databricks-based Lakehouse architecture using
 
 ## 📘 Explanation
 
-### 1. External Data Sources
+### 1. EXTERNAL DATA SOURCES
 This layer represents all possible sources of data that feed into Databricks.
+- **RDBMS (Relational Database Management System)**: Databases like MySQL, Oracle, PostgreSQL.
+- **REST APIs**: Interfaces that allow applications to communicate over HTTP.
+- **Event Streams (Kafka)**: Real-time data pipelines using tools like Apache Kafka.
+- **IoT/Logs/Flat Files**: Machine-generated data, device data, CSVs, JSON, etc.
+- **ERP/CRM Systems**: Enterprise systems like SAP (ERP) or Salesforce (CRM).
+- **SaaS Platforms**: Cloud-based services such as Google Analytics, Salesforce, Workday.
 
-- **RDBMS**: MySQL, Oracle, PostgreSQL, etc.
-- **REST APIs**: Interfaces over HTTP.
-- **Event Streams**: Real-time data via Apache Kafka.
-- **IoT/Logs/Flat Files**: CSVs, JSON, device logs.
-- **ERP/CRM Systems**: SAP, Salesforce.
-- **SaaS Platforms**: Google Analytics, Workday, etc.
+### 2. INGESTION LAYER
+This is where raw data enters Databricks from the external sources.
+- **Auto Loader**: A Databricks utility for ingesting data in batch or streaming mode automatically.
+- **Spark Structured Streaming**: Framework for processing streaming data.
+- **COPY INTO**: SQL command for loading data into Delta Lake.
+- **Partner Tools**: Tools like Fivetran, Informatica that offer prebuilt connectors.
+- **Kafka / Event Hubs / PubSub**:
+  - **Kafka**: Distributed event streaming platform.
+  - **Event Hubs**: Azure’s event ingestion service.
+  - **Pub/Sub**: Google Cloud’s messaging system.
 
----
-
-### 2. Ingestion Layer
-This is where raw data enters Databricks from external sources.
-
-- **Auto Loader**: Automatic data ingestion in batch/streaming.
-- **Spark Structured Streaming**: Real-time processing framework.
-- **COPY INTO**: SQL command to load into Delta Lake.
-- **Partner Tools**: Fivetran, Informatica.
-- **Messaging Systems**:
-  - Kafka
-  - Azure Event Hubs
-  - Google Pub/Sub
-
----
-
-### 3. Storage Layer + Medallion Architecture (Delta Lake)
-
-Implements a structured, tiered data lake.
-
-- **Delta Lake**: Adds ACID transactions and schema enforcement to data lakes.
-- **Medallion Architecture**:
-  - **Bronze**: Raw data (unfiltered).
-  - **Silver**: Cleaned and joined data.
-  - **Gold**: Aggregated, curated data.
+### 3. STORAGE LAYER + MEDALLION ARCHITECTURE (Delta Lake)
+This is the structured data lake using Delta Lake and implements the Medallion Architecture.
+- **Delta Lake**: An open-source storage layer that brings ACID transactions to data lakes.
+- **Medallion Architecture**: A 3-tier logical design to organize data:
+  - **BRONZE**: Raw ingestion data (unfiltered, unvalidated).
+  - **SILVER**: Cleaned and joined data (validated, deduplicated).
+  - **GOLD**: Business-level curated data (aggregated, enriched).
 - **Cloud Storage**:
-  - Amazon S3
-  - Azure ADLS
-  - Google Cloud Storage (GCS)
+  - **S3** – Amazon Simple Storage Service
+  - **ADLS** – Azure Data Lake Storage
+  - **GCS** – Google Cloud Storage
 
----
+### 4. DATA PROCESSING & ENGINEERING LAYER
+This layer transforms, enriches, and prepares the data for analytics or ML.
+- **Apache Spark**: Distributed data processing engine (Databricks is built on this).
+- **PySpark**: Python API for Apache Spark.
+- **Delta Live Tables (DLT)**: Declarative pipelines that automate ETL workflows.
+- **MLlib / XGBoost**: Built-in libraries for machine learning.
+- **Databricks Workflows**: Orchestrates jobs, schedules, and dependencies.
 
-### 4. Data Processing & Engineering Layer
-
-Transforms and enriches data for analytics and ML.
-
-- **Apache Spark**: Core engine for distributed compute.
-- **PySpark**: Python API for Spark.
-- **Delta Live Tables (DLT)**: Declarative ETL pipelines.
-- **MLlib / XGBoost**: Machine learning libraries.
-- **Workflows**: Job orchestration.
-
----
-
-### 5. Compute / Runtime Environment
-
-Executes queries, notebooks, and models.
-
+### 5. COMPUTE / RUNTIME ENVIRONMENT
+Resources used to execute queries, notebooks, pipelines, and ML models.
 - **Databricks Clusters**:
-  - Interactive Clusters (development)
-  - Job Clusters (production)
-- **Photon Runtime**: High-speed SQL engine.
-- **Serverless SQL Warehouses**: Auto-managed compute.
+  - **Interactive Cluster** – For development & notebooks.
+  - **Job Cluster** – For production jobs.
+- **Photon Runtime**: Highly performant SQL engine built by Databricks.
+- **Serverless SQL Warehouses**: Auto-managed compute for SQL users.
 
----
-
-### 6. Governance & Catalog Layer
-
-Manages security, metadata, and access control.
-
+### 6. GOVERNANCE & CATALOG LAYER
+Handles access, security, metadata, and lineage.
 - **Unity Catalog**:
-  - RBAC
-  - Lineage tracking
-  - Tagging
-  - Audit logs
-- **IAM Integration**: With Azure AD, Okta, etc.
+  - **RBAC** – Role-Based Access Control
+  - **Lineage** – Track data origin and transformation
+  - **Tags** – Metadata labels
+  - **Audits** – Logs for compliance and monitoring
+- **IAM (Identity and Access Management)**: Integrated with providers like Azure Active Directory for user identity and permission control.
+
+### 7. CONSUMPTION & INTERFACE LAYER
+Interfaces and tools used to consume and interact with the data.
+- **Notebooks**: Interactive environment for coding in Python, SQL, Scala, R.
+- **SQL Editor**: GUI-based SQL editor in Databricks.
+- **BI Dashboards**:
+  - **Power BI** – Microsoft’s analytics dashboard tool.
+  - **Tableau** – Popular data visualization platform.
+- **Databricks Jobs**: Scheduler for notebooks, scripts, pipelines.
+- **REST APIs / SDKs / dbx CLI**:
+  - **REST API** – Allows programmatic access.
+  - **SDK** – Software Development Kit for integration.
+  - **dbx CLI** – CLI tool to manage jobs, repos, deployments.
+
+### 8. CLOUD INFRASTRUCTURE PLATFORM
+Underlying cloud services where Databricks is deployed.
+- **AWS / Azure / GCP** – Cloud platforms supported by Databricks.
+- **Cloud Object Storage**: Persistent storage used by Delta Lake.
+- **Managed Kubernetes / VMs**:
+  - **Kubernetes** – Container orchestration engine.
+  - **VMs** – Virtual Machines provisioned for running Spark clusters.
 
 ---
 
-### 7. Consumption & Interface Layer
-
-How users and systems access and consume data.
-
-- **Notebooks**: Python, SQL, R, Scala.
-- **SQL Editor**
-- **BI Tools**:
-  - Power BI
-  - Tableau
-- **Job Scheduler**
-- **APIs & SDKs**:
-  - REST APIs
-  - dbx CLI
-  - Python/Scala SDKs
-
----
-
-### 8. Cloud Infrastructure Platform
-
-Where Databricks is hosted and scaled.
-
-- **Cloud Platforms**: AWS, Azure, GCP.
-- **Object Storage**: S3, ADLS, GCS.
-- **Cluster Provisioning**: Kubernetes or Virtual Machines.
-
----
-
-## 🔄 Summary: How It All Connects
-
-- Data flows from external sources into the Ingestion Layer.
-- Stored in Delta Lake using the Medallion Architecture (Bronze → Silver → Gold).
-- Transformed via Spark and ML in the Processing Layer.
-- Executed on managed compute environments.
-- Governed via Unity Catalog for secure access and auditing.
-- Consumed by analysts and apps via notebooks, BI tools, and APIs.
-- Entire stack runs on cloud platforms like AWS, Azure, or GCP.
-
----
-
-✨ Built for scalability, governance, and real-time intelligence.
-
+### Summary: How It All Connects
+- Data flows from external sources to the **Ingestion Layer**.
+- The data is then stored in Delta Lake following the **Medallion Architecture** (Bronze → Silver → Gold).
+- It’s processed using **Spark** and **ML** pipelines in the **Data Engineering Layer**.
+- These transformations run on compute clusters managed by **Databricks**.
+- **Governance** ensures secure and compliant data access.
+- Finally, data is consumed via **notebooks**, **dashboards**, or **APIs**.
+- All of this is built on cloud infrastructure like **AWS**, **Azure**, or **GCP**.
